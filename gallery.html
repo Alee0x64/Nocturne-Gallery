@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nocturne | Gallery</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./script.js" defer></script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+<div id="nocturne-loader" class="nocturne-loader" aria-label="Loading Nocturne">
+  <div class="loader-moon"></div>
+</div>
+  <header class="navbar">
+    <a href="./index.html" class="logo">
+      NOCTURNE<span>♡</span>
+    </a>
+    <a href="index.html" class="nocturne-brand" aria-label="Nocturne Home">
+  <svg class="nocturne-brand-moon"
+       xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="29" cy="32" r="23" fill="#ff2449"/>
+    <circle cx="40" cy="23" r="21" fill="#070506"/>
+    <circle cx="15" cy="48" r="2" fill="#ff667d"/>
+  </svg>
+  <span>NOCTURNE</span>
+</a>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html" aria-current="page">Gallery</a>
+      <a href="./about.html">About</a>
+      <a href="./editor.html">Studio</a>
+      <a
+        href="./index.html#owner-panel"
+        class="nav-add-button"
+        aria-label="Upload artwork"
+        title="Upload artwork"
+      >+</a>
+    </nav>
+  </header>
+  <main>
+    <section class="gallery-section" id="gallery">
+<div class="section-heading neon-gallery-heading">
+  <div class="gallery-heading-content">
+    <p class="eyebrow neon-eyebrow">
+      <span class="neon-status-dot"></span>
+      NOCTURNE://ARCHIVE_SYSTEM
+      <span class="neon-system-label">SYS.002</span>
+    </p>
+    <h1 class="neon-gallery-title">
+      THE <span>ARCHIVE</span>
+    </h1>
+    <p class="hero-description neon-gallery-description">
+      Fragments of imagination, preserved in the dark.
+    </p>
+  </div>
+  <div class="gallery-heading-status">
+    <span class="gallery-status-icon">✳</span>
+    <span class="gallery-status-label">COLLECTION STATUS</span>
+    <span id="art-count">Artworks</span>
+    <span class="gallery-online">
+      <span class="neon-status-dot"></span>
+      ARCHIVE ONLINE
+    </span>
+  </div>
+</div>
+      <div class="gallery-tools">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input
+            id="gallery-search"
+            type="search"
+            placeholder="Search artworks..."
+            aria-label="Search artworks"
+          >
+        </label>
+        <div class="gallery-filters" aria-label="Filter artworks">
+          <button
+            class="filter-button active"
+            data-category="all"
+            type="button"
+            aria-pressed="true"
+          >
+            All
+          </button>
+          <button
+            class="filter-button"
+            data-category="digital"
+            type="button"
+            aria-pressed="false"
+          >
+            Digital
+          </button>
+          <button
+            class="filter-button"
+            data-category="sketch"
+            type="button"
+            aria-pressed="false"
+          >
+            Sketches
+          </button>
+          <button
+            class="filter-button"
+            data-category="traditional"
+            type="button"
+            aria-pressed="false"
+          >
+            Traditional
+          </button>
+        </div>
+      </div>
+      <div class="gallery" id="art-gallery">
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Made with ♡ and a little bit of creativity.</p>
+    <p>© 2026 Nocturne</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nocturne | Home</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./script.js" defer></script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+<div id="nocturne-loader" class="nocturne-loader" aria-label="Loading Nocturne">
+  <div class="loader-moon"></div>
+</div>
+  <header class="navbar">
+    <a href="./index.html" class="logo">NOCTURNE<span>♡</span></a>
+    <a href="index.html" class="nocturne-brand" aria-label="Nocturne Home">
+  <svg class="nocturne-brand-moon"
+       xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="29" cy="32" r="23" fill="#ff2449"/>
+    <circle cx="40" cy="23" r="21" fill="#070506"/>
+    <circle cx="15" cy="48" r="2" fill="#ff667d"/>
+  </svg>
+  <span>NOCTURNE</span>
+</a>
+    <nav>
+      <a href="./index.html" aria-current="page">Home</a>
+      <a href="./gallery.html">Gallery</a>
+      <a href="./about.html">About</a>
+      <a href="./editor.html">Studio</a>
+      <button type="button" class="nav-add-button" id="nav-add-art"
+        aria-label="Upload artwork" title="Upload artwork">+</button>
+    </nav>
+  </header>
+  <main>
+<section class="nocturne-hero" aria-labelledby="hero-title">
+  <div class="hero-grid" aria-hidden="true"></div>
+<div class="nocturne-particles" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="status-dot"></span>
+      NOCTURNE ARCHIVE
+      <span class="hero-version"></span>
+    </div>
+    <h1 id="hero-title">
+      Art beyond<br />
+      <span>the ordinary.</span>
+    </h1>
+    <p class="hero-description">
+      A digital sanctuary for sketches, illustrations,
+      and creations from the shadows.
+    </p>
+    <div class="hero-meta">
+      <span>ARCHIVE STATUS: <strong>ONLINE</strong></span>
+      <span>ACCESS: <strong>PUBLIC</strong></span>
+    </div>
+    <a class="hero-cta" href="#art-gallery">
+      <span>↓</span> ENTER THE GALLERY
+    </a>
+  </div>
+  <div class="hero-terminal">
+    <div class="terminal-topbar">
+      <div class="terminal-lights" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <span>nocturne://visitor-terminal</span>
+      <span class="terminal-lock">[ SECURE ]</span>
+    </div>
+    <div class="terminal-art" aria-hidden="true">
+      <div class="art-sigil">N</div>
+      <span class="sigil-ring ring-one"></span>
+      <span class="sigil-ring ring-two"></span>
+      <span class="sigil-cross">✳</span>
+      <span class="sigil-coordinate">51°30'26.4"N</span>
+      <span class="sigil-caption">FIG. 001 — THE UNKNOWN</span>
+    </div>
+    <div class="terminal-body">
+      <p class="terminal-line">
+        <span class="terminal-prompt">visitor@nocturne:~$</span>
+        initializing_archive
+      </p>
+      <p class="terminal-success">[ OK ] Archive connection established</p>
+      <p class="terminal-success">[ OK ] Artwork index available</p>
+      <div id="terminal-output" class="terminal-output" aria-live="polite">
+        <p class="output">
+          Welcome, visitor. Type <strong>help</strong> to explore.
+        </p>
+      </div>
+      <form id="terminal-form" class="terminal-input-row">
+        <label class="terminal-prompt" for="terminal-input">$</label>
+        <input
+          id="terminal-input"
+          type="text"
+          placeholder="enter command..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <span class="terminal-cursor" aria-hidden="true"></span>
+      </form>
+    </div>
+  </div>
+</section>
+  <div class="nocturne-signature"><span></span>
+  </div>
+<section class="recent-artworks" id="recent-artworks">
+  <div class="recent-artworks-heading">
+    <div>
+      <p class="recent-eyebrow">✦ LATEST TRANSMISSIONS</p>
+      <h2>Recent artworks<span>.</span></h2>
+      <p class="recent-description">
+        Fresh creations from the Nocturne archive.
+      </p>
+    </div>
+    <a class="recent-view-all" href="./gallery.html">
+      VIEW ALL ARTWORKS <span>→</span>
+    </a>
+  </div>
+  <div class="recent-artworks-meta">
+    <span>ARCHIVE / RECENT</span>
+    <span id="recent-art-count">LATEST ENTRIES</span>
+  </div>
+  <div class="gallery recent-artworks-grid" id="art-gallery">
+  </div>
+</section>
+<section class="archive-status-bar" aria-label="Archive status">
+  <div class="archive-status-brand">
+    <span class="archive-status-indicator"></span>
+    <div>
+      <p class="archive-status-title">NOCTURNE ARCHIVE</p>
+      <p class="archive-status-subtitle">
+        A growing collection of art, dreams and experiments.
+      </p>
+    </div>
+  </div>
+  <div class="archive-status-detail">
+    <span>Collection</span>
+    <strong>Open archive</strong>
+  </div>
+  <div class="archive-status-detail">
+    <span>Status</span>
+    <strong>Accepting creativity</strong>
+  </div>
+  <div class="archive-status-online">
+    <span class="archive-pulse"></span>
+    <span>[ ONLINE ]</span>
+  </div>
+</section>
+    <section id="upload-window" class="owner-modal" hidden>
+      <div class="owner-modal-backdrop" id="owner-modal-backdrop"></div>
+      <div class="owner-window" role="dialog" aria-modal="true"
+        aria-labelledby="owner-window-title">
+        <div class="owner-window-header">
+          <span class="owner-window-dots"><span></span><span></span><span></span></span>
+          <span id="owner-window-title">nocturne://owner-panel</span>
+          <button type="button" id="close-owner-window"
+            class="owner-close-button" aria-label="Close owner panel">×</button>
+        </div>
+        <div class="owner-window-content">
+          <div id="owner-login-area">
+            <p class="section-label">[ RESTRICTED ACCESS ]</p>
+            <h2>Welcome back.</h2>
+            <p class="owner-subtitle">Sign in to manage your archive.</p>
+            <form id="owner-login-form">
+              <label for="owner-email">Email</label>
+              <input id="owner-email" type="email" placeholder="you@example.com"
+                autocomplete="username" required>
+              <label for="owner-password">Password</label>
+              <input id="owner-password" type="password"
+                placeholder="Your password" autocomplete="current-password" required>
+              <button type="submit" class="owner-submit-button">Sign in →</button>
+              <p id="login-message" role="status"></p>
+            </form>
+          </div>
+          <div id="owner-upload-panel" hidden>
+            <p class="section-label">[ ACCESS GRANTED ]</p>
+            <h2>Upload artwork</h2>
+            <p class="owner-subtitle">Add something new to the archive.</p>
+            <button id="owner-logout" type="button" class="owner-logout-button">
+              Sign out
+            </button>
+            <form id="upload-form">
+              <label for="art-title">Artwork title</label>
+              <input id="art-title" type="text" maxlength="100"
+                placeholder="Give your art a name..." required>
+              <label for="art-description">Description</label>
+              <textarea id="art-description" maxlength="1000" rows="3"
+                placeholder="Tell us about your creation..."></textarea>
+              <label for="art-category">Category</label>
+              <select id="art-category" required>
+                <option value="digital">Digital art</option>
+                <option value="traditional">Traditional art</option>
+                <option value="sketch">Sketch</option>
+              </select>
+              <label for="art-file">Image file</label>
+              <div class="file-upload-wrapper">
+                <input id="art-file" class="file-upload-input" type="file"
+                  accept="image/*" required>
+                <label for="art-file" class="file-upload-label">
+                  <span class="file-upload-icon">↑</span>
+                  <span class="file-upload-text">
+                    <strong>Choose your artwork</strong>
+                    <small id="file-upload-name">PNG, JPG, WEBP · Select an image</small>
+                  </span>
+                  <span class="file-upload-action">Browse</span>
+                </label>
+              </div>
+              <button id="upload-submit" type="submit" class="owner-submit-button">
+                Upload to archive ↑
+              </button>
+              <p id="upload-message" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Made with ♡ and a little bit of creativity.</p>
+    <p>© 2026 Nocturne</p>
+  </footer>
+  <script>
+    window.addEventListener("load", () => {
+      if (window.location.hash === "#owner-panel") {
+        document.getElementById("nav-owner-login")?.click();
+      }
+    });
+  </script>
+</body>
+</html>

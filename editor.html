@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100c0e">
+  <title>Nocturne Studio</title>
+  <link rel="stylesheet" href="./editor.css">
+  <link rel="icon" type="image/png" href="./favicon.svg">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./editor.js" defer></script>
+  
+</head>
+<body>
+<div id="nocturne-loader" class="nocturne-loader" aria-label="Loading Nocturne">
+  <div class="loader-moon"></div>
+</div>
+  <header class="topbar">
+    <a class="brand" href="./index.html">
+      NOCTURNE<span> / STUDIO</span>
+    </a>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html">Gallery</a>
+      <button id="logout-button" class="quiet-button hidden" type="button">
+        Sign out
+      </button>
+    </nav>
+  </header>
+  <main>
+    <section id="login-screen" class="login-screen">
+      <div class="login-card">
+        <p class="eyebrow">RESTRICTED WORKSPACE</p>
+        <h1>Enter the <span>Studio</span></h1>
+        <p class="muted">
+          Sign in with your existing Nocturne owner account.
+        </p>
+        <form id="login-form">
+          <label for="login-email">Email</label>
+          <input
+            id="login-email"
+            type="email"
+            autocomplete="username"
+            required
+          >
+          <label for="login-password">Password</label>
+          <input
+            id="login-password"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
+          <button class="primary-button" type="submit">
+            Enter Studio
+          </button>
+          <p id="login-message" class="message" role="status"></p>
+        </form>
+      </div>
+    </section>
+    <section id="studio" class="studio hidden">
+      <div class="studio-heading">
+        <div>
+          <p class="eyebrow">NOCTURNE ART DEPARTMENT</p>
+          <h1>Drawing <span>Studio</span></h1>
+        </div>
+        <span class="status">
+          <i></i> PRIVATE WORKSPACE
+        </span>
+      </div>
+      <div class="toolbar">
+        <div class="tool-group">
+          <label for="tool-select">TOOL</label>
+          <select id="tool-select">
+            <option value="pen">✎ Pen</option>
+            <option value="eraser">⌫ Eraser</option>
+            <option value="line">╱ Line</option>
+            <option value="rect">▱ Rectangle</option>
+            <option value="circle">◯ Circle</option>
+            <option value="pencil">✏ Pencil</option>
+            <option value="marker">▰ Marker</option>
+            <option value="airbrush">◉ Airbrush</option>
+            <option value="glow">✧ Glow brush</option>
+            <option value="eyedropper">⌖ Eyedropper</option>
+            <option value="fill">▨ Fill bucket</option>
+          </select>
+        </div>
+        <div class="tool-group">
+          <label for="brush-color">COLOR</label>
+          <input
+            id="brush-color"
+            type="color"
+            value="#ef4655"
+          >
+        </div>
+        <div class="tool-group slider-group">
+          <label for="brush-size">
+            BRUSH SIZE <span id="size-value">8</span> px
+          </label>
+          <input
+            id="brush-size"
+            type="range"
+            min="1"
+            max="80"
+            value="8"
+          >
+        </div>
+        <div class="tool-group slider-group">
+          <label for="brush-opacity">
+            BRUSH OPACITY <span id="opacity-value">100</span>%
+          </label>
+          <input
+            id="brush-opacity"
+            type="range"
+            min="5"
+            max="100"
+            value="100"
+          >
+        </div>
+        <div class="tool-actions">
+          <button
+            id="import-image-button"
+            class="secondary-button"
+            type="button"
+          >
+            ＋ Import image
+          </button>
+          <input
+            id="import-image-input"
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            hidden
+          >
+          <button id="undo-button" class="quiet-button" type="button">
+            ↶ Undo
+          </button>
+          <button id="redo-button" class="quiet-button" type="button">
+            ↷ Redo
+          </button>
+          <button id="clear-button" class="quiet-button" type="button">
+            Clear layer
+          </button>
+          <button
+            id="fullscreen-button"
+            class="primary-button"
+            type="button"
+          >
+            ⛶ Full screen
+          </button>
+<div class="tool-group zoom-controls">
+  <label for="zoom-level">CANVAS ZOOM</label>
+  <div class="zoom-buttons">
+    <button id="zoom-out" class="quiet-button" type="button" aria-label="Zoom out">−</button>
+    <select id="zoom-level" aria-label="Canvas zoom">
+      <option value="0.25">25%</option>
+      <option value="0.5">50%</option>
+      <option value="0.75">75%</option>
+      <option value="1" selected>100%</option>
+      <option value="1.25">125%</option>
+      <option value="1.5">150%</option>
+      <option value="2">200%</option>
+      <option value="3">300%</option>
+    </select>
+    <button id="zoom-in" class="quiet-button" type="button" aria-label="Zoom in">+</button>
+    <button id="zoom-fit" class="quiet-button" type="button">Fit</button>
+  </div>
+</div>
+<div class="tool-group palette-group">
+  <label>NEON PALETTE</label>
+  <div id="color-palette" class="color-palette">
+    <button type="button" data-color="#ff304f" style="--swatch:#ff304f" aria-label="Neon red" title="Neon red"></button>
+    <button type="button" data-color="#ff39d6" style="--swatch:#ff39d6" aria-label="Neon pink" title="Neon pink"></button>
+    <button type="button" data-color="#a855f7" style="--swatch:#a855f7" aria-label="Neon purple" title="Neon purple"></button>
+    <button type="button" data-color="#22d3ee" style="--swatch:#22d3ee" aria-label="Neon cyan" title="Neon cyan"></button>
+    <button type="button" data-color="#3b82f6" style="--swatch:#3b82f6" aria-label="Electric blue" title="Electric blue"></button>
+    <button type="button" data-color="#39ff88" style="--swatch:#39ff88" aria-label="Neon green" title="Neon green"></button>
+    <button type="button" data-color="#facc15" style="--swatch:#facc15" aria-label="Neon yellow" title="Neon yellow"></button>
+    <button type="button" data-color="#ffffff" style="--swatch:#ffffff" aria-label="White" title="White"></button>
+    <button type="button" data-color="#08070c" style="--swatch:#08070c" aria-label="Black" title="Black"></button>
+    <button type="button" data-color="#6d112b" style="--swatch:#6d112b" aria-label="Goth burgundy" title="Goth burgundy"></button>
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="workspace">
+        <aside class="layers-panel">
+          <div class="panel-heading">
+            <h2>Layers</h2>
+            <button
+              id="add-layer"
+              class="icon-button"
+              type="button"
+              title="Add layer"
+            >
+              +
+            </button>
+          </div>
+          <p class="muted small">
+            Higher layers appear on top.
+          </p>
+          <div id="layers-list" class="layers-list"></div>
+          <button
+            id="delete-layer"
+            class="quiet-button full-width"
+            type="button"
+          >
+            Delete selected layer
+          </button>
+          <div class="layer-opacity-control">
+            <label for="layer-opacity">
+              SELECTED LAYER OPACITY
+              <span id="layer-opacity-value">100</span>%
+            </label>
+            <input
+              id="layer-opacity"
+              type="range"
+              min="0"
+              max="100"
+              value="100"
+            >
+          </div>
+        </aside>
+        <section class="canvas-panel">
+          <div class="canvas-heading">
+            <span id="active-layer-label">Layer 1</span>
+            <span>1200 × 800 px</span>
+          </div>
+          <div id="canvas-wrap" class="canvas-wrap">
+            <canvas
+              id="display-canvas"
+              width="1200"
+              height="800"
+              aria-label="Drawing canvas"
+            ></canvas>
+          </div>
+          <p class="canvas-hint">
+            Draw with your mouse or touchpad. The canvas has a transparent background.
+          </p>
+        </section>
+      </div>
+      <section
+        id="projects-section"
+        class="projects-panel studio-extra-section"
+      >
+        <div>
+          <p class="eyebrow">YOUR PRIVATE ARCHIVE</p>
+          <h2>Unfinished projects</h2>
+          <p class="muted small">
+            Save your editable layers to your account and continue later.
+          </p>
+        </div>
+        <div class="project-controls">
+          <div class="project-name-field">
+            <label for="project-name">Project name</label>
+            <input
+              id="project-name"
+              maxlength="100"
+              placeholder="My unfinished drawing"
+              value="Untitled project"
+            >
+          </div>
+          <button
+            id="save-project"
+            class="primary-button"
+            type="button"
+          >
+            Save project
+          </button>
+          <div class="project-name-field">
+            <label for="saved-projects">Saved projects</label>
+            <select id="saved-projects">
+              <option value="">Loading projects...</option>
+            </select>
+          </div>
+          <button
+            id="load-project"
+            class="secondary-button"
+            type="button"
+          >
+            Open selected
+          </button>
+          <button
+            id="delete-project"
+            class="quiet-button"
+            type="button"
+          >
+            Delete saved project
+          </button>
+        </div>
+        <p id="project-message" class="message" role="status"></p>
+      </section>
+      <section class="export-panel studio-extra-section">
+        <div class="export-heading">
+          <p class="eyebrow">FINISH YOUR WORK</p>
+          <h2>Export or publish</h2>
+          <p class="muted">
+            PNG export saves a merged image. Publishing sends the merged image to your existing gallery.
+          </p>
+        </div>
+        <div class="export-grid">
+          <div class="export-card">
+            <h3>Download a copy</h3>
+            <p class="muted small">
+              Save your artwork to your device.
+            </p>
+            <button
+              id="export-button"
+              class="secondary-button"
+              type="button"
+            >
+              Download PNG
+            </button>
+          </div>
+          <form id="publish-form" class="export-card">
+            <h3>Publish to gallery</h3>
+            <label for="art-title">Artwork title</label>
+            <input
+              id="art-title"
+              maxlength="120"
+              required
+            >
+            <label for="art-description">Description</label>
+            <textarea
+              id="art-description"
+              rows="3"
+              maxlength="2000"
+            ></textarea>
+            <label for="art-category">Category</label>
+            <select id="art-category">
+              <option value="Digital Art">Digital Art</option>
+              <option value="Sketch">Sketch</option>
+              <option value="Pixel Art">Pixel Art</option>
+              <option value="Illustration">Illustration</option>
+              <option value="Other">Other</option>
+            </select>
+            <button
+              id="publish-button"
+              class="primary-button"
+              type="submit"
+            >
+              Publish artwork
+            </button>
+            <p id="publish-message" class="message" role="status"></p>
+          </form>
+        </div>
+      </section>
+    </section>
+  </main>
+  <footer>
+    NOCTURNE STUDIO <span>— CREATE IN THE DARK.</span>
+  </footer>
+</body>
+</html>
